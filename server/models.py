@@ -20,13 +20,13 @@ class Student(db.Model, SerializerMixin):
     fname = db.Column(db.String,nullable=False)
     lname = db.Column(db.String,nullable=False)
     email = db.Column(db.String,unique=True,nullable=False)
-    enrollment = db.Column(db.Integer,db.ForeignKey('enrollments.id'),nullable=False)
+    enrollment_id = db.Column(db.Integer,db.ForeignKey('enrollments.id'),nullable=False)
      
     #relationship
     enrollment = db.relationship('Enrollment',back_populates='sutdent', cascade='all,delete')
 
     #serialize rules
-    serialize_rules = ('-enrollments.student')
+    serialize_rules = ('-enrollments.student_id')
 
     def __repr__(self):
         return "<Student {self.id} => {self.fname} - {self.lname}>"
@@ -44,7 +44,7 @@ class Enrollment(db.Model,SerializerMixin):
 
 
     #serialize rules
-    serialize_rules =('-stundents.enrollment',)
+    serialize_rules =('-stundents.enrollment_id',)
 
     def __repr__(self):
         return "<Enrollment {self.id}>"
